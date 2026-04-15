@@ -20,11 +20,13 @@ class _PdfToImageScreenState extends State<PdfToImageScreen> {
 
   String? file;
   bool isLoading = false;
-  String selectedFormat = "JPG"; // Default format
+  String selectedFormat = "JPG";
 
   final TextEditingController outputController = TextEditingController(
     text: "pdf_images",
   );
+
+  final TextEditingController pagesController = TextEditingController();
 
   Future<void> pickFile() async {
     final result = await FilePicker.platform.pickFiles(
@@ -45,6 +47,7 @@ class _PdfToImageScreenState extends State<PdfToImageScreen> {
       file = safePdfPath;
       outputController.text =
           "${result.files.single.name.replaceAll('.pdf', '')}-images";
+      pagesController.text = ""; // Reset on new file
       isLoading = false;
     });
   }
@@ -58,6 +61,9 @@ class _PdfToImageScreenState extends State<PdfToImageScreen> {
       final result = await _channel.invokeMethod('pdfToImage', {
         'inputPath': file,
         'format': selectedFormat,
+        'pages': pagesController.text.trim().isEmpty
+            ? "all"
+            : pagesController.text.trim(),
         'outputName': outputController.text,
       });
 
@@ -203,11 +209,25 @@ class _PdfToImageScreenState extends State<PdfToImageScreen> {
                                 ),
                                 const SizedBox(height: 24),
 
+                                // NEW: Pages Input Field
+                                TextField(
+                                  controller: pagesController,
+                                  decoration: const InputDecoration(
+                                    labelText: "Pages (e.g. 1, 3, 5-8)",
+                                    hintText:
+                                        "Leave blank to convert all pages",
+                                    prefixIcon: Icon(
+                                      Icons.format_list_numbered,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+
                                 TextField(
                                   controller: outputController,
                                   decoration: const InputDecoration(
-                                    labelText:
-                                        "Output filename (will be a .zip file)",
+                                    labelText: "Output filename (.zip)",
+                                    prefixIcon: Icon(Icons.save),
                                   ),
                                 ),
                               ],
@@ -238,6 +258,7 @@ class _PdfToImageScreenState extends State<PdfToImageScreen> {
   @override
   void dispose() {
     outputController.dispose();
+    pagesController.dispose();
     super.dispose();
   }
 }

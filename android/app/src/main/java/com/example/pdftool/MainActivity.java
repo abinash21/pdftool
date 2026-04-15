@@ -884,6 +884,7 @@ public class MainActivity extends FlutterActivity {
 
                         String inputPath = call.argument("inputPath");
                         String format = call.argument("format");
+                        String pages = call.argument("pages");
                         String outputName = call.argument("outputName");
 
                         if (inputPath == null || format == null) {
@@ -922,7 +923,7 @@ public class MainActivity extends FlutterActivity {
 
                                 File tempFile = new File(getCacheDir(), "temp_images.zip");
 
-                                PdfToImageService.convert(inputPath, format, tempFile.getAbsolutePath());
+                                PdfToImageService.convert(inputPath, format, pages, tempFile.getAbsolutePath()); 
 
                                 java.io.OutputStream outputStream = getContentResolver().openOutputStream(uri);
                                 java.io.InputStream inputStream = new java.io.FileInputStream(tempFile);
