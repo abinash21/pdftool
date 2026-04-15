@@ -48,10 +48,8 @@ flutter {
 }
 
 dependencies {
-    // Your existing PDFBox port for the rotate service
     implementation("com.tom-roush:pdfbox-android:2.0.27.0")
 
-    // ADDED: iText7 dependencies for your Merge, Watermark, Split, and Signature services
     implementation("com.itextpdf:kernel:7.2.5")
     implementation("com.itextpdf:layout:7.2.5")
     implementation("com.itextpdf:io:7.2.5")
