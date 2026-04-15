@@ -1,0 +1,29 @@
+name: pdftool
+description: "A new Flutter project."
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  file_picker: ^10.3.10
+  pdfx: ^2.6.0
+  syncfusion_flutter_pdf: ^32.2.7
+  syncfusion_flutter_pdfviewer: ^32.2.9
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.2.2
+  pdf: ^3.11.3
+  printing: ^5.14.2
+  reorderable_grid_view: ^2.2.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
